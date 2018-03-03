@@ -10,7 +10,8 @@
   ],
   "require": {
     "php": "^7.1",
-    "fabpot/goutte": "^3.2"
+    "fabpot/goutte": "^3.2",
+    "monolog/monolog": "^1.23"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "~2.7.1"

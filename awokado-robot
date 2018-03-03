@@ -8,20 +8,35 @@ use AdamWojs\AwokadoRobot\MenuProvider;
 use AdamWojs\AwokadoRobot\Notification\SlackWebhookTransport;
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 if ($argc < 2) {
     exit("usage: $argv[0] <webhook-url>");
 }
 
+$logger = new Logger('awokado-robot');
+$logger->pushHandler(new StreamHandler(__DIR__.'/var/logs/awokado.log', Logger::DEBUG));
+
+$stack = HandlerStack::create();
+$stack->push(Middleware::log($logger, new MessageFormatter('{request} - {response}')));
+
 $goutteClient = new Client();
 $goutteClient->setClient(new GuzzleClient([
     'timeout' => 180,
+    'handler' => $stack,
 ]));
 
 $menuProvider = new MenuProvider($goutteClient, 'http://awokado.krakow.pl/lunch-bar/menu/');
-$transport = new SlackWebhookTransport(new GuzzleClient(), $argv[1]);
+$transport = new SlackWebhookTransport(new GuzzleClient([
+    'handler' => $stack
+]), $argv[1]);
 
 $robot = new AwokadoRobot($menuProvider, $transport);
+$robot->setLogger($logger);
 $robot->run();
 
 

@@ -3,6 +3,7 @@
 namespace AdamWojs\AwokadoRobot\Notification;
 
 use AdamWojs\AwokadoRobot\Menu;
+use Exception;
 use GuzzleHttp\ClientInterface;
 
 class SlackWebhookTransport implements TransportInterface
@@ -32,14 +33,18 @@ class SlackWebhookTransport implements TransportInterface
     {
         $text = $this->formatMenu($menu);
 
-        $this->client->request('POST', $this->webhookUrl, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'body' => json_encode([
-                'text' => $text,
-            ]),
-        ]);
+        try {
+            $this->client->request('POST', $this->webhookUrl, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => json_encode([
+                    'text' => $text,
+                ]),
+            ]);
+        } catch (Exception $e) {
+            throw new TransportException('Notification transport error: ' . $e->getMessage(), 0, $e);
+        }
     }
 
     private function formatMenu(Menu $menu): string
