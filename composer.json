@@ -1,0 +1,26 @@
+{
+  "name": "adamwojs/awokadorobot",
+  "type": "project",
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Adam Wójs",
+      "email": "adam@wojs.pl"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "fabpot/goutte": "^3.2"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "~2.7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "AdamWojs\\AwokadoRobot\\": "src/"
+    }
+  },
+  "scripts": {
+    "fix-cs": "@php ./vendor/bin/php-cs-fixer fix src -v --show-progress=estimating"
+  }
+}
