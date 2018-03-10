@@ -2,7 +2,7 @@
 
 namespace AdamWojs\AwokadoRobot;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Goutte\Client;
 
@@ -34,7 +34,7 @@ class MenuProvider implements MenuProviderInterface
      */
     public function getCurrentMenu(): ?Menu
     {
-        $today = new DateTime();
+        $today = new DateTimeImmutable();
 
         if (!$this->isMenuAvailable($today)) {
             // Menu is not available
