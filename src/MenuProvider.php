@@ -9,6 +9,7 @@ use Goutte\Client;
 class MenuProvider implements MenuProviderInterface
 {
     const AWOKADO_MENU_SELECTOR = '.tabcontent';
+    const SEPARATOR = ' – ';
 
     /** @var Client */
     private $client;
@@ -59,13 +60,14 @@ class MenuProvider implements MenuProviderInterface
         $items = [];
         $lines = explode(PHP_EOL, $text);
         foreach ($lines as $line) {
-            $line = trim($line);
-            if (!$line) {
-                continue;
-            }
+            if (false !== ($pos = mb_stripos($line, self::SEPARATOR))) {
+                $name = trim(mb_substr($line, 0, $pos));
+                $price = trim(mb_substr($line, $pos + mb_strlen(self::SEPARATOR)));
 
-            list($name, $price) = explode(' – ', $line);
-            $items[] = new MenuItem($name, $price);
+                if ('' !== $name && '' !== $price) {
+                    $items[] = new MenuItem($name, $price);
+                }
+            }
         }
 
         return $items;
