@@ -38,9 +38,9 @@ class SlackWebhookTransport implements TransportInterface
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'body' => json_encode([
+                'json' => [
                     'text' => $text,
-                ]),
+                ],
             ]);
         } catch (Exception $e) {
             throw new TransportException('Notification transport error: ' . $e->getMessage(), 0, $e);
