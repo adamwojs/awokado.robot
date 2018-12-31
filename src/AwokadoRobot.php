@@ -2,6 +2,7 @@
 
 namespace AdamWojs\AwokadoRobot;
 
+use AdamWojs\AwokadoRobot\Menu\Provider\MenuProviderInterface;
 use Exception;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;

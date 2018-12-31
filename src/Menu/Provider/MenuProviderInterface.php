@@ -1,6 +1,8 @@
 <?php
 
-namespace AdamWojs\AwokadoRobot;
+namespace AdamWojs\AwokadoRobot\Menu\Provider;
+
+use AdamWojs\AwokadoRobot\Menu\Menu;
 
 interface MenuProviderInterface
 {

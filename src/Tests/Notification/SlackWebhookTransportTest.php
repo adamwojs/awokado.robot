@@ -2,11 +2,10 @@
 
 namespace AdamWojs\AwokadoRobot\Tests\Notification;
 
-use AdamWojs\AwokadoRobot\Menu;
-use AdamWojs\AwokadoRobot\MenuItem;
+use AdamWojs\AwokadoRobot\Menu\Menu;
+use AdamWojs\AwokadoRobot\Menu\MenuItem;
 use AdamWojs\AwokadoRobot\Notification\SlackWebhookTransport;
 use DateTimeImmutable;
-use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\ClientInterface;
@@ -62,7 +61,7 @@ class SlackWebhookTransportTest extends TestCase
      */
     public function isThrowingTransportExceptionOnFailure()
     {
-        $exception = new Exception('Krem Buraczano-Chrzanowy detected!');
+        $exception = new \Exception('Krem Buraczano-Chrzanowy detected!');
 
         $this->client
             ->expects($this->once())

@@ -1,12 +1,15 @@
 <?php
 
-namespace AdamWojs\AwokadoRobot;
+namespace AdamWojs\AwokadoRobot\Menu\Provider\Awokado;
 
+use AdamWojs\AwokadoRobot\Menu\Menu;
+use AdamWojs\AwokadoRobot\Menu\MenuItem;
+use AdamWojs\AwokadoRobot\Menu\Provider\MenuProviderInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Goutte\Client;
 
-class MenuProvider implements MenuProviderInterface
+class AwokadoMenuProvider implements MenuProviderInterface
 {
     const AWOKADO_MENU_SELECTOR = '.tabcontent';
     const SEPARATOR = ' – ';

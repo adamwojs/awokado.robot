@@ -2,8 +2,7 @@
 
 namespace AdamWojs\AwokadoRobot\Notification;
 
-use AdamWojs\AwokadoRobot\Menu;
-use Exception;
+use AdamWojs\AwokadoRobot\Menu\Menu;
 use GuzzleHttp\ClientInterface;
 
 class SlackWebhookTransport implements TransportInterface
@@ -42,7 +41,7 @@ class SlackWebhookTransport implements TransportInterface
                     'text' => $text,
                 ],
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new TransportException('Notification transport error: ' . $e->getMessage(), 0, $e);
         }
     }

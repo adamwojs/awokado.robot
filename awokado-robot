@@ -4,39 +4,32 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use AdamWojs\AwokadoRobot\AwokadoRobot;
-use AdamWojs\AwokadoRobot\MenuProvider;
-use AdamWojs\AwokadoRobot\Notification\SlackWebhookTransport;
-use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Middleware;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
+use AdamWojs\AwokadoRobot\Notification\SlackWebhookTransportFactory;
+use AdamWojs\AwokadoRobot\Menu\Provider\Awokado\AwokadoMenuProviderFactory;
+use AdamWojs\AwokadoRobot\LoggerFactory;
 
-if ($argc < 2) {
-    exit("usage: $argv[0] <webhook-url>");
+$restaurants = [
+  'awokado' => AwokadoMenuProviderFactory::class
+];
+
+
+if ($argc < 3) {
+    exit("usage: $argv[0] <restaurant> <webhook-url>");
 }
 
-$logger = new Logger('awokado-robot');
-$logger->pushHandler(new StreamHandler(__DIR__.'/var/logs/awokado.log', Logger::DEBUG));
+$restaurant = $argv[1];
+$webhook = $argv[2];
 
-$stack = HandlerStack::create();
-$stack->push(Middleware::log($logger, new MessageFormatter('{request} - {response}')));
 
-$goutteClient = new Client();
-$goutteClient->setClient(new GuzzleClient([
-    'timeout' => 180,
-    'handler' => $stack,
-]));
+if(empty($restaurants[$restaurant])) {
+    exit("unknown restaurant");
+}
 
-$menuProvider = new MenuProvider($goutteClient, 'http://awokado.krakow.pl/lunch-bar/menu/');
-$transport = new SlackWebhookTransport(new GuzzleClient([
-    'handler' => $stack
-]), $argv[1]);
+$menuProvider = $restaurants[$restaurant]::create();
+$transport = SlackWebhookTransportFactory::create($webhook);
 
 $robot = new AwokadoRobot($menuProvider, $transport);
-$robot->setLogger($logger);
+$robot->setLogger(LoggerFactory::get());
 $robot->run();
 
 
