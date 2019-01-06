@@ -36,6 +36,7 @@ final class AwokadoRobot
             $this->logger->info('Fetching menu...');
 
             $menu = $this->menuProvider->getCurrentMenu();
+
             if (null === $menu) {
                 $this->logger->info('Menu is not available');
 

@@ -35,6 +35,14 @@ class AwokadoMenuProvider implements MenuProviderInterface
     /**
      * {@inheritdoc}
      */
+    public function getRestaurant(): string
+    {
+        return 'Awokado Lunch Bar';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCurrentMenu(): ?Menu
     {
         $today = new DateTimeImmutable();
@@ -46,7 +54,7 @@ class AwokadoMenuProvider implements MenuProviderInterface
 
         $items = $this->parseMenu($this->fetchMenu($today));
 
-        return new Menu($today, $items);
+        return new Menu($this->getRestaurant(), $today, $items);
     }
 
     private function fetchMenu(DateTimeInterface $date): string

@@ -45,7 +45,7 @@ class SlackWebhookTransportTest extends TestCase
             ->method('request')
             ->with('POST', self::WEBHOOK_URL, $payload);
 
-        $menu = new Menu(new DateTimeImmutable('2018-01-01'), [
+        $menu = new Menu('Awokado', new DateTimeImmutable('2018-01-01'), [
             new MenuItem('A', '14,50 zł'),
             new MenuItem('B', '12,50 zł'),
             new MenuItem('C', '11,50 zł'),
