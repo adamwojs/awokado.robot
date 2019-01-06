@@ -48,7 +48,7 @@ class Menu
     /**
      * @return string
      */
-    public function getRestaurant()
+    public function getRestaurant(): string
     {
         return $this->restaurant;
     }

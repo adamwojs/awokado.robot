@@ -6,10 +6,12 @@ require __DIR__ . '/vendor/autoload.php';
 use AdamWojs\AwokadoRobot\AwokadoRobot;
 use AdamWojs\AwokadoRobot\Notification\SlackWebhookTransportFactory;
 use AdamWojs\AwokadoRobot\Menu\Provider\Awokado\AwokadoMenuProviderFactory;
+use AdamWojs\AwokadoRobot\Menu\Provider\ZieloneTarasy\ZieloneTarasyMenuProviderFactory;
 use AdamWojs\AwokadoRobot\LoggerFactory;
 
 $restaurants = [
-  'awokado' => AwokadoMenuProviderFactory::class
+  'awokado' => AwokadoMenuProviderFactory::class,
+  'zielone-tarasy' => ZieloneTarasyMenuProviderFactory::class
 ];
 
 
@@ -31,7 +33,3 @@ $transport = SlackWebhookTransportFactory::create($webhook);
 $robot = new AwokadoRobot($menuProvider, $transport);
 $robot->setLogger(LoggerFactory::get());
 $robot->run();
-
-
-
-

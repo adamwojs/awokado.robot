@@ -52,9 +52,8 @@ class AwokadoMenuProvider implements MenuProviderInterface
      */
     public function getMenu(DateTimeInterface $date): ?Menu
     {
-
         if (!$this->isMenuAvailable($date)) {
-           throw new \RuntimeException('Menu not available');
+            throw new \RuntimeException('Menu not available');
         }
 
         $items = $this->parseMenu($this->fetchMenu($date));

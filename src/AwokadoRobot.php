@@ -36,8 +36,9 @@ final class AwokadoRobot
         try {
             $today = new DateTimeImmutable();
 
-            if(!$this->menuProvider->isMenuAvailable($today)) {
+            if (!$this->menuProvider->isMenuAvailable($today)) {
                 $this->logger->info('Menu is not available');
+
                 return;
             }
 
@@ -47,7 +48,6 @@ final class AwokadoRobot
             $this->logger->info('Sending menu...');
             $this->transport->send($menu);
             $this->logger->info('Menu has been sent.');
-
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
         }
