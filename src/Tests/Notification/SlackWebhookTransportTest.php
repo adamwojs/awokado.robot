@@ -36,7 +36,7 @@ class SlackWebhookTransportTest extends TestCase
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'text' => "Menu na dziś (tj. 01-01-2018) :fork_and_knife:\n```\nA - 14,50 zł\nB - 12,50 zł\nC - 11,50 zł\n```",
+                'text' => "Awokado - menu na dziś (tj. 01-01-2018) :fork_and_knife:\n```\nA - 14,50 zł\nB - 12,50 zł\nC - 11,50 zł\n```",
             ],
         ];
 
@@ -68,6 +68,6 @@ class SlackWebhookTransportTest extends TestCase
             ->method('request')
             ->willThrowException($exception);
 
-        $this->transport->send($this->createMock(Menu::class));
+        $this->transport->send(new Menu('Wierzynek', new DateTimeImmutable(), []));
     }
 }

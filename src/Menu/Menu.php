@@ -2,11 +2,11 @@
 
 namespace AdamWojs\AwokadoRobot\Menu;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 class Menu
 {
-    /** @var DateTimeImmutable */
+    /** @var DateTimeInterface */
     private $date;
 
     /** @var @var string */
@@ -19,21 +19,27 @@ class Menu
      * Menu constructor.
      *
      * @param string $restaurant
-     * @param DateTimeImmutable $date
+     * @param DateTimeInterface $date
      * @param MenuItem[] $items
      */
-    public function __construct(string $restaurant, DateTimeImmutable $date, array $items)
+    public function __construct(string $restaurant, DateTimeInterface $date, array $items)
     {
         $this->restaurant = $restaurant;
         $this->date = $date;
         $this->items = $items;
     }
 
-    public function getDate(): DateTimeImmutable
+    /**
+     * @return DateTimeInterface
+     */
+    public function getDate(): DateTimeInterface
     {
         return $this->date;
     }
 
+    /**
+     * @return MenuItem[]
+     */
     public function getItems(): array
     {
         return $this->items;
