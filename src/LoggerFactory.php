@@ -23,7 +23,7 @@ class LoggerFactory
         }
 
         $logger = new Logger('awokado-robot');
-        $logger->pushHandler(new StreamHandler(__DIR__ . '../var/logs/awokado.log', Logger::DEBUG));
+        $logger->pushHandler(new StreamHandler(__DIR__ . '/../var/logs/awokado.log', Logger::DEBUG));
         self::$logger = $logger;
 
         return self::$logger;

@@ -45,15 +45,27 @@ class ZieloneTarasyMenuProvider implements MenuProviderInterface
      */
     public function getMenu(DateTimeInterface $date): ?Menu
     {
-        $data = $this->parse();
+        $lines = $this->parse();
 
-        if (!\in_array(\count($data), [5, 7])) {
-            throw new \RuntimeException('Zielone tarasy website has changed, Revise the code of the menu provider.');
-        }
+        $header = null;
+        $description = null;
 
         $menuItems = [];
-        for ($i = 1;$i < \count($data);$i += 2) {
-            $menuItems[] = $this->createMenuItem($data[$i], $data[$i + 1]);
+        foreach($lines as $line) {
+            if(strpos($line, 'zł:')) {
+                if($header) {
+                    $menuItems[] = $this->createMenuItem($header, $description);
+                }
+
+                $header = trim($line);
+                $description = null;
+            } else {
+                $description .= $line;
+            }
+        }
+
+        if($header){
+            $menuItems[] = $this->createMenuItem($header, $description);
         }
 
         return new Menu(
@@ -71,7 +83,8 @@ class ZieloneTarasyMenuProvider implements MenuProviderInterface
         $children = $this
             ->crawler
             ->filter(self::MENU_CONTAINER_SELECTOR)
-            ->children();
+            ->children()
+        ;
 
         $data = [];
         foreach ($children as $child) {
