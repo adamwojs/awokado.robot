@@ -2,7 +2,7 @@
 
 namespace AdamWojs\AwokadoRobot\Notification;
 
-use AdamWojs\AwokadoRobot\Menu;
+use AdamWojs\AwokadoRobot\Menu\Menu;
 
 interface TransportInterface
 {

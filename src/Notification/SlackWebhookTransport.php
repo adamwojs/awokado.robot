@@ -2,8 +2,7 @@
 
 namespace AdamWojs\AwokadoRobot\Notification;
 
-use AdamWojs\AwokadoRobot\Menu;
-use Exception;
+use AdamWojs\AwokadoRobot\Menu\Menu;
 use GuzzleHttp\ClientInterface;
 
 class SlackWebhookTransport implements TransportInterface
@@ -42,7 +41,7 @@ class SlackWebhookTransport implements TransportInterface
                     'text' => $text,
                 ],
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new TransportException('Notification transport error: ' . $e->getMessage(), 0, $e);
         }
     }
@@ -50,7 +49,7 @@ class SlackWebhookTransport implements TransportInterface
     private function formatMenu(Menu $menu): string
     {
         $lines = [];
-        $lines[] = sprintf('Menu na dziś (tj. %s) :fork_and_knife:', $menu->getDate()->format('d-m-Y'));
+        $lines[] = sprintf('%s - menu na dziś (tj. %s) :fork_and_knife:', $menu->getRestaurant(), $menu->getDate()->format('d-m-Y'));
         $lines[] = '```';
         foreach ($menu->getItems() as $item) {
             $lines[] = sprintf('%s - %s', $item->getName(), $item->getPrice());

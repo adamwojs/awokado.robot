@@ -1,12 +1,14 @@
 <?php
 
-namespace AdamWojs\AwokadoRobot;
+namespace AdamWojs\AwokadoRobot\Menu\Provider\Awokado;
 
-use DateTimeImmutable;
+use AdamWojs\AwokadoRobot\Menu\Menu;
+use AdamWojs\AwokadoRobot\Menu\MenuItem;
+use AdamWojs\AwokadoRobot\Menu\Provider\MenuProviderInterface;
 use DateTimeInterface;
 use Goutte\Client;
 
-class MenuProvider implements MenuProviderInterface
+class AwokadoMenuProvider implements MenuProviderInterface
 {
     const AWOKADO_MENU_SELECTOR = '.tabcontent';
     const SEPARATOR = ' – ';
@@ -32,20 +34,37 @@ class MenuProvider implements MenuProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentMenu(): ?Menu
+    public function getRestaurant(): string
     {
-        $today = new DateTimeImmutable();
-
-        if (!$this->isMenuAvailable($today)) {
-            // Menu is not available
-            return null;
-        }
-
-        $items = $this->parseMenu($this->fetchMenu($today));
-
-        return new Menu($today, $items);
+        return 'Awokado Lunch Bar';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function isMenuAvailable(DateTimeInterface $date): bool
+    {
+        return $date->format('N') <= 5;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMenu(DateTimeInterface $date): ?Menu
+    {
+        if (!$this->isMenuAvailable($date)) {
+            throw new \RuntimeException('Menu not available');
+        }
+
+        $items = $this->parseMenu($this->fetchMenu($date));
+
+        return new Menu($this->getRestaurant(), $date, $items);
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     * @return string
+     */
     private function fetchMenu(DateTimeInterface $date): string
     {
         return $this->client
@@ -55,6 +74,10 @@ class MenuProvider implements MenuProviderInterface
             ->text();
     }
 
+    /**
+     * @param string $text
+     * @return array
+     */
     private function parseMenu(string $text): array
     {
         $items = [];
@@ -71,10 +94,5 @@ class MenuProvider implements MenuProviderInterface
         }
 
         return $items;
-    }
-
-    private function isMenuAvailable(DateTimeInterface $date): bool
-    {
-        return $date->format('N') <= 5;
     }
 }

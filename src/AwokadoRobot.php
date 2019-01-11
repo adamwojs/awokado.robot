@@ -2,6 +2,8 @@
 
 namespace AdamWojs\AwokadoRobot;
 
+use AdamWojs\AwokadoRobot\Menu\Provider\MenuProviderInterface;
+use DateTimeImmutable;
 use Exception;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
@@ -32,14 +34,16 @@ final class AwokadoRobot
     public function run(): void
     {
         try {
-            $this->logger->info('Fetching menu...');
+            $today = new DateTimeImmutable();
 
-            $menu = $this->menuProvider->getCurrentMenu();
-            if (null === $menu) {
+            if (!$this->menuProvider->isMenuAvailable($today)) {
                 $this->logger->info('Menu is not available');
 
                 return;
             }
+
+            $this->logger->info('Fetching menu...');
+            $menu = $this->menuProvider->getMenu($today);
 
             $this->logger->info('Sending menu...');
             $this->transport->send($menu);

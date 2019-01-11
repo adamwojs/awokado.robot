@@ -1,6 +1,6 @@
 <?php
 
-namespace AdamWojs\AwokadoRobot;
+namespace AdamWojs\AwokadoRobot\Menu;
 
 class MenuItem
 {

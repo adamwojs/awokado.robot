@@ -1,6 +1,6 @@
 # awokado.robot
 
-Slack bot providing Awokado Lunch Bar menu for today
+Slack bot providing menu of lunch bars and restaurants for today
 
 ![Screenshot](https://www.dropbox.com/s/kzrvihbnut3u1lv/Awokado%32Robot%32Preview.png?raw=1)
 
@@ -14,6 +14,10 @@ Slack bot providing Awokado Lunch Bar menu for today
 ## Usage
 
 ```sh
-php awokado-robot <incoming-webhook-url>
+php awokado-robot <restaurant> <incoming-webhook-url>
 ```
 
+## Supported restaurants
+
+1. [awokado](http://awokado.krakow.pl) - Awokado Lunch Bar ul. Prądnicka 12, 30-002 Kraków
+1. [zielone-tarasy](https://www.zielone-tarasy.eu) - Zielone Tarasy Restro Bar Gallery al. Słowackiego 64, 30-004 Kraków
