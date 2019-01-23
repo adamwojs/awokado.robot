@@ -29,7 +29,7 @@ class ZieloneTarasyMenuProvider implements MenuProviderInterface
      */
     public function getRestaurant(): string
     {
-        return 'Zielone Tarasy Restro Bar Gallery';
+        return 'Zielone Tarasy Resto Bar Gallery';
     }
 
     /**

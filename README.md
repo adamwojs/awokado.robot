@@ -20,4 +20,4 @@ php awokado-robot <restaurant> <incoming-webhook-url>
 ## Supported restaurants
 
 1. [awokado](http://awokado.krakow.pl) - Awokado Lunch Bar ul. Prądnicka 12, 30-002 Kraków
-1. [zielone-tarasy](https://www.zielone-tarasy.eu) - Zielone Tarasy Restro Bar Gallery al. Słowackiego 64, 30-004 Kraków
+1. [zielone-tarasy](https://www.zielone-tarasy.eu) - Zielone Tarasy Resto Bar Gallery al. Słowackiego 64, 30-004 Kraków
